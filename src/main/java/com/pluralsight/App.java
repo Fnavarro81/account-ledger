@@ -84,6 +84,22 @@ public class App {
         }
     }
 
+    public static double promptForDouble(Scanner inputScanner, String prompt){
+        while (true) {
+            System.out.println(prompt);
+            String input = inputScanner.nextLine().trim();
+            try {
+                double value = Double.parseDouble(input);
+                if (value > 0) {
+                    return value;
+                }
+                System.out.println("Value must be greater than 0. Please try again.");
+            }catch (NumberFormatException e) {
+                System.out.println("Invalid number format. Please enter a valid number amount.");
+            }
+        }
+    }
+
     public static void runLedgerScreen() {
         boolean subLedgerMenuRunning = true;
 
