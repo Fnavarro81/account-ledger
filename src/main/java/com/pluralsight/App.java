@@ -2,6 +2,13 @@ package com.pluralsight;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class App {
     private static Scanner inputScanner = new Scanner(System.in);
@@ -47,6 +54,35 @@ public class App {
         System.out.println("Enter your choice: ");
     }
 
+    public static void addDeposit(Scanner inputScanner) {
+        System.out.println("\n===== Record Deposit =====");
+
+        String description = promptForString(inputScanner, "Enter description: ");
+        String vendor = promptForString(inputScanner, "Enter vendor: ");
+        double amount = promptForDouble(inputScanner, "Enter amount(must be more than 0): ");
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String recordLine = String.format("%s|%s|%s|%s|%.2f", date, time, description, vendor, amount);
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter("transaction.csv", true))){
+            writer.println(recordLine);
+            System.out.println("Deposit successfully recorded and saved to transactions.csv!");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to transactions.csv: " + e.getMessage());
+        }
+    }
+
+    public static String promptForString(Scanner inputScanner, String prompt) {
+        String input;
+        while (true) {
+            System.out.println(prompt);
+            input = inputScanner.nextLine().trim();
+            if (!input.isEmpty()){
+                return input;
+            }
+            System.out.println("Input cannot be blank. Please try again.");
+        }
+    }
 
     public static void runLedgerScreen() {
         boolean subLedgerMenuRunning = true;
