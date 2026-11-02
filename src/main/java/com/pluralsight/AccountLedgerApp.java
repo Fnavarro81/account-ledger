@@ -28,7 +28,7 @@ public class AccountLedgerApp {
                     System.out.println("TODO Make Payment");
                     break;
                 case "L":
-                    System.out.println("TODO Ledger Screen");
+                    runLedgerScreen();
                     break;
                 case "X":
                     System.out.println("Goodbye!");
@@ -49,5 +49,42 @@ public class AccountLedgerApp {
         System.out.println("Enter your choice: ");
     }
 
+    public static void runLedgerScreen(){
+        boolean subMenuRunning = true;
 
+        do {
+            printLedgerScreen();
+            String choice = inputScanner.nextLine().trim().toUpperCase();
+
+            switch (choice){
+                case "A":
+                    System.out.println("TODO All");
+                    break;
+                case "D":
+                    System.out.println("TODO Deposits");
+                    break;
+                case "P":
+                    System.out.println("TODO Payments");
+                    break;
+                case "R":
+                    System.out.println("TODO Reports Screen");
+                    break;
+                case "H":
+                    subMenuRunning = false;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please choose A, D, P, R, or H");
+            }
+        }while (subMenuRunning);
+    }
+
+    public static void printLedgerScreen(){
+        System.out.println("===== Ledger =====");
+        System.out.println("[A] All");
+        System.out.println("[D] Deposits");
+        System.out.println("[P] Payments");
+        System.out.println("[R] Reports");
+        System.out.println("[H] Home");
+        System.out.println("Enter your choice");
+    }
 }
