@@ -45,12 +45,12 @@ public class AccountLedgerApp {
         System.out.println("[D] Add Deposit");
         System.out.println("[P] Make Payment");
         System.out.println("[L} Ledger");
-        System.out.println("[E] Exit");
+        System.out.println("[X] Exit");
         System.out.println("Enter your choice: ");
     }
 
     public static void runLedgerScreen(){
-        boolean subMenuRunning = true;
+        boolean subLedgerMenuRunning = true;
 
         do {
             printLedgerScreen();
@@ -67,15 +67,15 @@ public class AccountLedgerApp {
                     System.out.println("TODO Payments");
                     break;
                 case "R":
-                    System.out.println("TODO Reports Screen");
+                    runReportsScreen();
                     break;
                 case "H":
-                    subMenuRunning = false;
+                    subLedgerMenuRunning = false;
                     break;
                 default:
                     System.out.println("Invalid option. Please choose A, D, P, R, or H");
             }
-        }while (subMenuRunning);
+        }while (subLedgerMenuRunning);
     }
 
     public static void printLedgerScreen(){
@@ -85,6 +85,49 @@ public class AccountLedgerApp {
         System.out.println("[P] Payments");
         System.out.println("[R] Reports");
         System.out.println("[H] Home");
-        System.out.println("Enter your choice");
+        System.out.println("Enter your choice: ");
+    }
+
+    public static void runReportsScreen(){
+        boolean subReportsScreenRunning = true;
+
+        do {
+            printReportsScreen();
+            String choice = inputScanner.nextLine().trim().toUpperCase();
+
+            switch (choice){
+                case "1":
+                    System.out.println("TODO Month to Date");
+                    break;
+                case "2":
+                    System.out.println("TODO Previous Month");
+                    break;
+                case "3":
+                    System.out.println("TODO Year to Date");
+                    break;
+                case "4":
+                    System.out.println("TODO Previous Year");
+                    break;
+                case "5":
+                    System.out.println("TODO Search by Vendor");
+                    break;
+                case "0":
+                    subReportsScreenRunning = false;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please choose 1, 2, 3, 4, 5, or 0");
+            }
+        }while (subReportsScreenRunning);
+    }
+
+    public static void printReportsScreen(){
+        System.out.println("===== Reports =====");
+        System.out.println("[1] Month to Date");
+        System.out.println("[2] Previous Month");
+        System.out.println("[3] Year to Date");
+        System.out.println("[4] Previous Year");
+        System.out.println("[5] Search by Vendor");
+        System.out.println("[0] Back");
+        System.out.println("Enter your choice: ");
     }
 }
