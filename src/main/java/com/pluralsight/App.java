@@ -1,13 +1,11 @@
 package com.pluralsight;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
-import java.io.IOException;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 
-public class AccountLedgerApp {
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class App {
     private static Scanner inputScanner = new Scanner(System.in);
+    private static ArrayList<Transaction> transactions;
 
     public static void main(String[] args) {
         runHomeScreen();
@@ -16,11 +14,11 @@ public class AccountLedgerApp {
     public static void runHomeScreen() {
         boolean running = true;
 
-        do{
+        do {
             printHomeScreen();
             String choice = inputScanner.nextLine().trim().toUpperCase();
 
-            switch (choice){
+            switch (choice) {
                 case "D":
                     System.out.println("TODO Add Deposit");
                     break;
@@ -37,26 +35,27 @@ public class AccountLedgerApp {
                 default:
                     System.out.println("Invalid option. Please choose D, P, L, or X");
             }
-        }while (running);
+        } while (running);
     }
 
-    public static void printHomeScreen(){
+    public static void printHomeScreen() {
         System.out.println("===== Main Menu =====");
-        System.out.println("[D] Add Deposit");
-        System.out.println("[P] Make Payment");
-        System.out.println("[L} Ledger");
-        System.out.println("[X] Exit");
+        System.out.println("D) Add Deposit");
+        System.out.println("P) Make Payment");
+        System.out.println("L) Ledger");
+        System.out.println("X) Exit");
         System.out.println("Enter your choice: ");
     }
 
-    public static void runLedgerScreen(){
+
+    public static void runLedgerScreen() {
         boolean subLedgerMenuRunning = true;
 
         do {
             printLedgerScreen();
             String choice = inputScanner.nextLine().trim().toUpperCase();
 
-            switch (choice){
+            switch (choice) {
                 case "A":
                     System.out.println("TODO All");
                     break;
@@ -75,27 +74,27 @@ public class AccountLedgerApp {
                 default:
                     System.out.println("Invalid option. Please choose A, D, P, R, or H");
             }
-        }while (subLedgerMenuRunning);
+        } while (subLedgerMenuRunning);
     }
 
-    public static void printLedgerScreen(){
+    public static void printLedgerScreen() {
         System.out.println("===== Ledger =====");
-        System.out.println("[A] All");
-        System.out.println("[D] Deposits");
-        System.out.println("[P] Payments");
-        System.out.println("[R] Reports");
-        System.out.println("[H] Home");
+        System.out.println("A) All");
+        System.out.println("D) Deposits");
+        System.out.println("P) Payments");
+        System.out.println("R) Reports");
+        System.out.println("H) Home");
         System.out.println("Enter your choice: ");
     }
 
-    public static void runReportsScreen(){
+    public static void runReportsScreen() {
         boolean subReportsScreenRunning = true;
 
         do {
             printReportsScreen();
             String choice = inputScanner.nextLine().trim().toUpperCase();
 
-            switch (choice){
+            switch (choice) {
                 case "1":
                     System.out.println("TODO Month to Date");
                     break;
@@ -117,17 +116,17 @@ public class AccountLedgerApp {
                 default:
                     System.out.println("Invalid option. Please choose 1, 2, 3, 4, 5, or 0");
             }
-        }while (subReportsScreenRunning);
+        } while (subReportsScreenRunning);
     }
 
-    public static void printReportsScreen(){
+    public static void printReportsScreen() {
         System.out.println("===== Reports =====");
-        System.out.println("[1] Month to Date");
-        System.out.println("[2] Previous Month");
-        System.out.println("[3] Year to Date");
-        System.out.println("[4] Previous Year");
-        System.out.println("[5] Search by Vendor");
-        System.out.println("[0] Back");
+        System.out.println("1) Month To Date");
+        System.out.println("2) Previous Month");
+        System.out.println("3) Year To Date");
+        System.out.println("4) Previous Year");
+        System.out.println("5) Search by Vendor");
+        System.out.println("0) Back");
         System.out.println("Enter your choice: ");
     }
 }
