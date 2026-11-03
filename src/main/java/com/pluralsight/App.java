@@ -166,24 +166,15 @@ public class App {
 
     public static void printAllTransactions() {
         System.out.println("===== All Transactions =====");
-
-        if (transactions.isEmpty()) {
-            System.out.println("No transactions found.");
-            return;
-        }
-        System.out.printf("%-12s | %-10s | %-25s | %-20s | %12s%n", "Date", "Time", "Description", "Vendor", "Amount");
-        System.out.println("----------------------------------------------------------------------------------------");
-
-        for (Transaction transaction : transactions) {
-            System.out.printf("%-12s | %-10s | %-25s | %-20s | $%12.2f%n",
-                    transaction.getDate(),
-                    transaction.getTime(),
-                    transaction.getDescription(),
-                    transaction.getVendor(),
-                    transaction.getAmount());
-        }
+        printTransactionTable(transactions);
         pressEnterToContinue();
 
+    }
+
+    public static void printDeposits() {
+        System.out.println("===== Deposits =====");
+
+        boolean found
     }
 
     public static void runReportsScreen() {
@@ -266,5 +257,24 @@ public class App {
         System.out.println();
         System.out.println("Press enter to go back to the menu...");
         inputScanner.nextLine();
+    }
+
+    public static void printTransactionTable(java.util.List<Transaction> transactionList) {
+        if (transactionList.isEmpty()) {
+            System.out.println("No transactions found.");
+            return;
+        }
+
+        System.out.printf("%-12s | %-10s | %-25s | %-20s | %12s%n", "Date", "Time", "Description", "Vendor", "Amount");
+        System.out.println("----------------------------------------------------------------------------------------");
+
+        for (Transaction t : transactionList) {
+            System.out.printf("%-12s | %-10s | %-25s | %-20s | $%11.2f%n",
+                    t.getDate(),
+                    t.getTime(),
+                    t.getDescription(),
+                    t.getVendor(),
+                    t.getAmount());
+        }
     }
 }
