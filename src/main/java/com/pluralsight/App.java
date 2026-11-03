@@ -27,10 +27,10 @@ public class App {
 
             switch (choice) {
                 case "D":
-                    System.out.println("TODO Add Deposit");
+                    addDeposit();
                     break;
                 case "P":
-                    System.out.println("TODO Make Payment");
+                    makePayment();
                     break;
                 case "L":
                     runLedgerScreen();
@@ -54,7 +54,7 @@ public class App {
         System.out.println("Enter your choice: ");
     }
 
-    public static void addDeposit(Scanner inputScanner) {
+    public static void addDeposit() {
         System.out.println("\n===== Record Deposit =====");
 
         String description = promptForString(inputScanner, "Enter description: ");
@@ -64,9 +64,30 @@ public class App {
         String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
         String recordLine = String.format("%s|%s|%s|%s|%.2f", date, time, description, vendor, amount);
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter("transaction.csv", true))){
+        try (PrintWriter writer = new PrintWriter(new FileWriter("transactions.csv", true))) {
             writer.println(recordLine);
             System.out.println("Deposit successfully recorded and saved to transactions.csv!");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to transactions.csv: " + e.getMessage());
+        }
+    }
+
+    public static void makePayment() {
+        System.out.println("\n===== Record Payment =====");
+
+        String description = promptForString(inputScanner, "Enter description: ");
+        String vendor = promptForString(inputScanner, "Enter vendor: ");
+        double positiveAmount = promptForDouble(inputScanner, "Enter amount (must be more than 0): ");
+
+        double negativeAmount = -positiveAmount;
+
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String recordLine = String.format("%s|%s|%s|%s|%.2f", date, time, description, vendor, negativeAmount);
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter("transactions.csv", true))) {
+            writer.println(recordLine);
+            System.out.println("Payment successfully recorded and saved to transactions.csv!");
         } catch (IOException e) {
             System.out.println("An error occurred while writing to transactions.csv: " + e.getMessage());
         }
@@ -77,14 +98,14 @@ public class App {
         while (true) {
             System.out.println(prompt);
             input = inputScanner.nextLine().trim();
-            if (!input.isEmpty()){
+            if (!input.isEmpty()) {
                 return input;
             }
             System.out.println("Input cannot be blank. Please try again.");
         }
     }
 
-    public static double promptForDouble(Scanner inputScanner, String prompt){
+    public static double promptForDouble(Scanner inputScanner, String prompt) {
         while (true) {
             System.out.println(prompt);
             String input = inputScanner.nextLine().trim();
@@ -94,7 +115,7 @@ public class App {
                     return value;
                 }
                 System.out.println("Value must be greater than 0. Please try again.");
-            }catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid number format. Please enter a valid number amount.");
             }
         }
