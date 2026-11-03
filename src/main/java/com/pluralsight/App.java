@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -133,7 +134,7 @@ public class App {
 
             switch (choice) {
                 case "A":
-                    System.out.println("TODO All");
+                    printAllTransactions();
                     break;
                 case "D":
                     System.out.println("TODO Deposits");
@@ -160,7 +161,28 @@ public class App {
         System.out.println("P) Payments");
         System.out.println("R) Reports");
         System.out.println("H) Home");
-        System.out.println("Enter your choice: ");
+        System.out.print("Enter your choice: ");
+    }
+
+    public static void printAllTransactions() {
+        System.out.println("===== All Transactions =====");
+
+        if (transactions.isEmpty()) {
+            System.out.println("No transactions found.");
+            return;
+        }
+        System.out.printf("%-12s | %-10s | %-25s | %-20s | %12s%n", "Date", "Time", "Description", "Vendor", "Amount");
+        System.out.println("----------------------------------------------------------------------------------------");
+
+        for (Transaction transaction : transactions) {
+            System.out.printf("%-12s | %-10s | %-25s | %-20s | $%12.2f%n",
+                    transaction.getDate(),
+                    transaction.getTime(),
+                    transaction.getDescription(),
+                    transaction.getVendor(),
+                    transaction.getAmount());
+        }
+        pressEnterToContinue();
     }
 
     public static void runReportsScreen() {
