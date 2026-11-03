@@ -183,6 +183,7 @@ public class App {
                     transaction.getAmount());
         }
         pressEnterToContinue();
+
     }
 
     public static void runReportsScreen() {
