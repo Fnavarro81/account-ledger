@@ -49,7 +49,7 @@ public class App {
         System.out.println("P) Make Payment");
         System.out.println("L) Ledger");
         System.out.println("X) Exit");
-        System.out.println("Enter your choice: ");
+        System.out.print("Enter your choice: ");
     }
 
     public static void addDeposit() {
@@ -69,6 +69,7 @@ public class App {
         } catch (IOException e) {
             System.out.println("An error occurred while writing to transactions.csv: " + e.getMessage());
         }
+        pressEnterToContinue();
     }
 
     public static void makePayment() {
@@ -89,6 +90,7 @@ public class App {
         } catch (IOException e) {
             System.out.println("An error occurred while writing to transactions.csv: " + e.getMessage());
         }
+        pressEnterToContinue();
     }
 
     public static String promptForString(Scanner inputScanner, String prompt) {
@@ -235,5 +237,11 @@ public class App {
         } catch (IOException e) {
             System.out.println("No existing transactions.csv found.");
         }
+    }
+
+    public static void pressEnterToContinue() {
+        System.out.println();
+        System.out.println("Press enter to go back to the menu...");
+        inputScanner.nextLine();
     }
 }
