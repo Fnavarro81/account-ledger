@@ -1,20 +1,18 @@
 package com.pluralsight;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.PrintWriter;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class App {
     private static Scanner inputScanner = new Scanner(System.in);
-    private static ArrayList<Transaction> transactions;
+    private static ArrayList<Transaction> transactions = new ArrayList<>();
 
     public static void main(String[] args) {
+        loadTransactions();
         runHomeScreen();
     }
 
@@ -66,6 +64,8 @@ public class App {
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("transactions.csv", true))) {
             writer.println(recordLine);
+            Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
+            transactions.add(newTransaction);
             System.out.println("Deposit successfully recorded and saved to transactions.csv!");
         } catch (IOException e) {
             System.out.println("An error occurred while writing to transactions.csv: " + e.getMessage());
@@ -87,6 +87,8 @@ public class App {
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("transactions.csv", true))) {
             writer.println(recordLine);
+            Transaction newTransaction = new Transaction(date, time, description, vendor, negativeAmount);
+            transactions.add(newTransaction);
             System.out.println("Payment successfully recorded and saved to transactions.csv!");
         } catch (IOException e) {
             System.out.println("An error occurred while writing to transactions.csv: " + e.getMessage());
@@ -201,5 +203,36 @@ public class App {
         System.out.println("5) Search by Vendor");
         System.out.println("0) Back");
         System.out.println("Enter your choice: ");
+    }
+
+    public static void loadTransactions() {
+        transactions.clear();
+        boolean isHeader = true;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))){
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
+                String[] parts = line.split("\\|");
+                if (parts.length >= 5) {
+                    String date = parts[0].trim();
+                    String time = parts[1].trim();
+                    String description = parts[2].trim();
+                    String vendor = parts[3].trim();
+                    double amount = Double.parseDouble(parts[4].trim());
+
+                    Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                    transactions.add(transaction);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("No existing transactions.csv found.");
+        }
     }
 }
