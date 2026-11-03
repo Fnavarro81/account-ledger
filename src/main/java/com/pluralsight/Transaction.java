@@ -1,35 +1,39 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class Transaction {
 
-    private String localDate;
-    private String localTime;
+    private LocalDate date;
+    private LocalTime time;
     private String description;
     private String vendor;
     private double amount;
 
-    public Transaction(String localDate, String localTime, String description, String vendor, double amount) {
-        this.localDate = localDate;
-        this.localTime = localTime;
+    public Transaction(LocalDate date,LocalTime time, String description, String vendor, double amount) {
+        this.date = date;
+        this.time = time;
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
     }
 
-    public String getLocalDate() {
-        return localDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setLocalDate(String localDate) {
-        this.localDate = localDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public String getLocalTime() {
-        return localTime;
+    public LocalTime getTime() {
+        return time;
     }
 
-    public void setLocalTime(String localTime) {
-        this.localTime = localTime;
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     public String getDescription() {
@@ -54,5 +58,11 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String toCSV() {
+        String dateAsString = this.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String timeAsString = this.time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        return String.format("%s|%s|%s|%s|%.2f", dateAsString, timeAsString, description, vendor, amount);
     }
 }

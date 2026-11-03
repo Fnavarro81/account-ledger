@@ -58,14 +58,13 @@ public class App {
         String description = promptForString(inputScanner, "Enter description: ");
         String vendor = promptForString(inputScanner, "Enter vendor: ");
         double amount = promptForDouble(inputScanner, "Enter amount(must be more than 0): ");
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-        String recordLine = String.format("%s|%s|%s|%s|%.2f", date, time, description, vendor, amount);
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
+        transactions.add(newTransaction);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("transactions.csv", true))) {
-            writer.println(recordLine);
-            Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
-            transactions.add(newTransaction);
+            writer.println(newTransaction.toCSV());
             System.out.println("Deposit successfully recorded and saved to transactions.csv!");
         } catch (IOException e) {
             System.out.println("An error occurred while writing to transactions.csv: " + e.getMessage());
@@ -78,17 +77,14 @@ public class App {
         String description = promptForString(inputScanner, "Enter description: ");
         String vendor = promptForString(inputScanner, "Enter vendor: ");
         double positiveAmount = promptForDouble(inputScanner, "Enter amount (must be more than 0): ");
-
         double negativeAmount = -positiveAmount;
-
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-        String recordLine = String.format("%s|%s|%s|%s|%.2f", date, time, description, vendor, negativeAmount);
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        Transaction newTransaction = new Transaction(date, time, description, vendor, negativeAmount);
+        transactions.add(newTransaction);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("transactions.csv", true))) {
-            writer.println(recordLine);
-            Transaction newTransaction = new Transaction(date, time, description, vendor, negativeAmount);
-            transactions.add(newTransaction);
+            writer.println(newTransaction.toCSV());
             System.out.println("Payment successfully recorded and saved to transactions.csv!");
         } catch (IOException e) {
             System.out.println("An error occurred while writing to transactions.csv: " + e.getMessage());
@@ -98,18 +94,21 @@ public class App {
     public static String promptForString(Scanner inputScanner, String prompt) {
         String input;
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt);
             input = inputScanner.nextLine().trim();
             if (!input.isEmpty()) {
+                System.out.println("Input cannot be blank. Please try again.");
+            } else if (input.contains("|")) {
+                System.out.println("input can not contain a ('|') pipe character");
+            } else {
                 return input;
             }
-            System.out.println("Input cannot be blank. Please try again.");
         }
     }
 
     public static double promptForDouble(Scanner inputScanner, String prompt) {
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt);
             String input = inputScanner.nextLine().trim();
             try {
                 double value = Double.parseDouble(input);
@@ -208,6 +207,8 @@ public class App {
     public static void loadTransactions() {
         transactions.clear();
         boolean isHeader = true;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))){
             String line;
@@ -221,8 +222,8 @@ public class App {
                 }
                 String[] parts = line.split("\\|");
                 if (parts.length >= 5) {
-                    String date = parts[0].trim();
-                    String time = parts[1].trim();
+                    LocalDate date = LocalDate.parse(parts[0].trim(), dateFormatter);
+                    LocalTime time = LocalTime.parse(parts[1].trim(), timeFormatter);
                     String description = parts[2].trim();
                     String vendor = parts[3].trim();
                     double amount = Double.parseDouble(parts[4].trim());
