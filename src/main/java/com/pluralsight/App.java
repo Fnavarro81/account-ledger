@@ -44,7 +44,7 @@ public class App {
     }
 
     public static void printHomeScreen() {
-        System.out.println("===== Main Menu =====");
+        System.out.println("===== Home =====");
         System.out.println("D) Add Deposit");
         System.out.println("P) Make Payment");
         System.out.println("L) Ledger");
@@ -98,7 +98,7 @@ public class App {
         while (true) {
             System.out.print(prompt);
             input = inputScanner.nextLine().trim();
-            if (!input.isEmpty()) {
+            if (input.isEmpty()) {
                 System.out.println("Input cannot be blank. Please try again.");
             } else if (input.contains("|")) {
                 System.out.println("input can not contain a ('|') pipe character");
@@ -125,7 +125,7 @@ public class App {
     }
 
     public static void runLedgerScreen() {
-        boolean subLedgerMenuRunning = true;
+        boolean isRunning = true;
 
         do {
             printLedgerScreen();
@@ -145,12 +145,12 @@ public class App {
                     runReportsScreen();
                     break;
                 case "H":
-                    subLedgerMenuRunning = false;
+                    isRunning = false;
                     break;
                 default:
                     System.out.println("Invalid option. Please choose A, D, P, R, or H");
             }
-        } while (subLedgerMenuRunning);
+        } while (isRunning);
     }
 
     public static void printLedgerScreen() {
@@ -234,7 +234,7 @@ public class App {
         System.out.println("4) Previous Year");
         System.out.println("5) Search by Vendor");
         System.out.println("0) Back");
-        System.out.println("Enter your choice: ");
+        System.out.print("Enter your choice: ");
     }
 
     public static void loadTransactions() {
@@ -270,6 +270,16 @@ public class App {
         }
     }
 
+    public static ArrayList<Transaction> getTransactionsByMonth(int year, int month) {
+        ArrayList<Transaction> filtered = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getYear() == year) {
+                filtered.add(transaction);
+            }
+        }
+        return filtered;
+    }
+
     public static void pressEnterToContinue() {
         System.out.println();
         System.out.println("Press enter to go back to the menu...");
@@ -285,13 +295,13 @@ public class App {
         System.out.printf("%-12s | %-10s | %-25s | %-20s | %12s%n", "Date", "Time", "Description", "Vendor", "Amount");
         System.out.println("----------------------------------------------------------------------------------------");
 
-        for (Transaction t : transactionList) {
+        for (Transaction transaction : transactionList) {
             System.out.printf("%-12s | %-10s | %-25s | %-20s | $%11.2f%n",
-                    t.getDate(),
-                    t.getTime(),
-                    t.getDescription(),
-                    t.getVendor(),
-                    t.getAmount());
+                    transaction.getDate(),
+                    transaction.getTime(),
+                    transaction.getDescription(),
+                    transaction.getVendor(),
+                    transaction.getAmount());
         }
     }
 }
