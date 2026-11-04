@@ -272,8 +272,28 @@ public class App {
 
     public static ArrayList<Transaction> getTransactionsByMonth(int year, int month) {
         ArrayList<Transaction> filtered = new ArrayList<>();
+        for (Transaction t : transactions) {
+            if (t.getDate().getYear() == year && t.getDate().getMonthValue() == month) {
+                filtered.add(t);
+            }
+        }
+        return filtered;
+    }
+
+    public static ArrayList<Transaction> getTransactionsByYear(int year) {
+        ArrayList<Transaction> filtered = new ArrayList<>();
+        for (Transaction t : transactions) {
+            if (t.getDate().getYear() == year) {
+                filtered.add(t);
+            }
+        }
+        return filtered;
+    }
+
+    public static ArrayList<Transaction> getTransactionsByVendor(String vendorName) {
+        ArrayList<Transaction> filtered = new ArrayList<>();
         for (Transaction transaction : transactions) {
-            if (transaction.getDate().getYear() == year) {
+            if (transaction.getVendor().equalsIgnoreCase(vendorName)) {
                 filtered.add(transaction);
             }
         }
