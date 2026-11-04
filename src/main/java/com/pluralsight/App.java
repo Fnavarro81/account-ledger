@@ -203,7 +203,7 @@ public class App {
 
             switch (choice) {
                 case "1":
-                    System.out.println("TODO Month to Date");
+                    runMonthToDate();
                     break;
                 case "2":
                     System.out.println("TODO Previous Month");
@@ -268,6 +268,16 @@ public class App {
         } catch (IOException e) {
             System.out.println("No existing transactions.csv found.");
         }
+    }
+
+    public static void runMonthToDate() {
+        System.out.println("===== Month TO Date =====");
+        LocalDate now = LocalDate.now();
+
+        ArrayList<Transaction> filtered = getTransactionsByMonth(now.getYear(), now.getMonthValue());
+
+        printTransactionTable(filtered);
+        pressEnterToContinue();
     }
 
     public static ArrayList<Transaction> getTransactionsByMonth(int year, int month) {
