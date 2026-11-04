@@ -209,10 +209,10 @@ public class App {
                     runPreviousMonth();
                     break;
                 case "3":
-                    System.out.println("TODO Year to Date");
+                    runYearToDate();
                     break;
                 case "4":
-                    System.out.println("TODO Previous Year");
+                    runPreviousYear();
                     break;
                 case "5":
                     System.out.println("TODO Search by Vendor");
@@ -290,7 +290,25 @@ public class App {
         pressEnterToContinue();
     }
 
+    public static void runYearToDate() {
+        System.out.println("\n===== Year To Date =====");
+        int currentYear = LocalDate.now().getYear();
 
+        ArrayList<Transaction> filtered = getTransactionsByYear(currentYear);
+
+        printTransactionTable(filtered);
+        pressEnterToContinue();
+    }
+
+    public static void runPreviousYear() {
+        System.out.println("\n===== Previous Year =====");
+        int targetYear = LocalDate.now().getYear() - 1;
+
+        ArrayList<Transaction> filtered = getTransactionsByYear(targetYear);
+
+        printTransactionTable(filtered);
+        pressEnterToContinue();
+    }
 
     public static ArrayList<Transaction> getTransactionsByMonth(int year, int month) {
         ArrayList<Transaction> filtered = new ArrayList<>();
