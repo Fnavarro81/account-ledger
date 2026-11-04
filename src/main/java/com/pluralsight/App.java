@@ -215,7 +215,7 @@ public class App {
                     runPreviousYear();
                     break;
                 case "5":
-                    System.out.println("TODO Search by Vendor");
+                    runSearchByVendor();
                     break;
                 case "0":
                     subReportsScreenRunning = false;
@@ -307,6 +307,16 @@ public class App {
         ArrayList<Transaction> filtered = getTransactionsByYear(targetYear);
 
         printTransactionTable(filtered);
+        pressEnterToContinue();
+    }
+
+    public static void runSearchByVendor() {
+        System.out.println("===== Search By Vendor =====");
+        String searchVendor = promptForString(inputScanner, "Enter vendor name" );
+
+        ArrayList<Transaction> filetered = getTransactionsByVendor(searchVendor);
+
+        printTransactionTable(filetered);
         pressEnterToContinue();
     }
 
