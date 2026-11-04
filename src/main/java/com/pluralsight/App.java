@@ -1,7 +1,6 @@
 package com.pluralsight;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -137,10 +136,10 @@ public class App {
                     printAllTransactions();
                     break;
                 case "D":
-                    System.out.println("TODO Deposits");
+                    printDeposits();
                     break;
                 case "P":
-                    System.out.println("TODO Payments");
+                    printPayments();
                     break;
                 case "R":
                     runReportsScreen();
@@ -173,8 +172,26 @@ public class App {
 
     public static void printDeposits() {
         System.out.println("===== Deposits =====");
+        ArrayList<Transaction> deposits = new ArrayList<>();
+        for (Transaction transaction: transactions) {
+            if (transaction.getAmount() > 0){
+                deposits.add(transaction);
+            }
+        }
+        printTransactionTable(deposits);
+        pressEnterToContinue();
+    }
 
-        boolean found
+    public static void printPayments() {
+        System.out.println("===== Payments =====");
+        ArrayList<Transaction> payments = new ArrayList<>();
+        for (Transaction transaction: transactions) {
+            if (transaction.getAmount() < 0){
+                payments.add(transaction);
+            }
+        }
+        printTransactionTable(payments);
+        pressEnterToContinue();
     }
 
     public static void runReportsScreen() {
