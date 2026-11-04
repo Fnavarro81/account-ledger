@@ -206,7 +206,7 @@ public class App {
                     runMonthToDate();
                     break;
                 case "2":
-                    System.out.println("TODO Previous Month");
+                    runPreviousMonth();
                     break;
                 case "3":
                     System.out.println("TODO Year to Date");
@@ -279,6 +279,18 @@ public class App {
         printTransactionTable(filtered);
         pressEnterToContinue();
     }
+
+    public static void runPreviousMonth() {
+        System.out.println("===== Previous Month =====");
+        LocalDate targetDate = LocalDate.now().minusMonths(1);
+
+        ArrayList<Transaction> filtered = getTransactionsByMonth(targetDate.getYear(), targetDate.getMonthValue());
+
+        printTransactionTable(filtered);
+        pressEnterToContinue();
+    }
+
+
 
     public static ArrayList<Transaction> getTransactionsByMonth(int year, int month) {
         ArrayList<Transaction> filtered = new ArrayList<>();
