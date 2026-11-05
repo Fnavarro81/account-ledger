@@ -12,6 +12,7 @@ public class App {
     private static final ArrayList<Transaction> transactions = new ArrayList<>();
 
     public static void main(String[] args) {
+        displayApplicationBannerName();
         loadTransactions();
         runHomeScreen();
     }
@@ -373,5 +374,26 @@ public class App {
                     transaction.getVendor(),
                     transaction.getAmount());
         }
+    }
+
+    public static void displayApplicationBannerName() {
+        System.out.println(" _____            _   _            _ ");
+        System.out.println("/  ___|          | | (_)          | |");
+        System.out.println("\\ `--.  ___ _ __ | |_ _ _ __   ___| |");
+        System.out.println(" `--. \\/ _ \\ '_ \\| __| | '_ \\ / _ \\ |");
+        System.out.println("/\\__/ /  __/ | | | |_| | | | |  __/ |");
+        System.out.println("\\____/ \\___|_| |_|\\__|_|_| |_|\\___|_|");
+        System.out.println();
+        System.out.println("Loading");
+
+        for (int loading = 0; loading < 4; loading++) {
+            try {
+                Thread.sleep(1000);
+                System.out.print(".");
+            } catch (InterruptedException e) {
+                System.out.println("Reloading");
+            }
+        }
+        System.out.println();
     }
 }
