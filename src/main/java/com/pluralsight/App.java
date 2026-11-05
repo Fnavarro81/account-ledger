@@ -3,6 +3,7 @@ package com.pluralsight;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -196,7 +197,7 @@ public class App {
     }
 
     public static void runReportsScreen() {
-        boolean subReportsScreenRunning = true;
+        boolean isRunning = true;
 
         do {
             printReportsScreen();
@@ -204,27 +205,27 @@ public class App {
 
             switch (choice) {
                 case "1":
-                    runMonthToDate();
+                    displayMonthToDate();
                     break;
                 case "2":
-                    runPreviousMonth();
+                    displayPreviousMonth();
                     break;
                 case "3":
-                    runYearToDate();
+                    displayYearToDate();
                     break;
                 case "4":
-                    runPreviousYear();
+                    displayPreviousYear();
                     break;
                 case "5":
-                    runSearchByVendor();
+                    displaySearchByVendor();
                     break;
                 case "0":
-                    subReportsScreenRunning = false;
+                    isRunning = false;
                     break;
                 default:
                     System.out.println("Invalid option. Please choose 1, 2, 3, 4, 5, or 0");
             }
-        } while (subReportsScreenRunning);
+        } while (isRunning);
     }
 
     public static void printReportsScreen() {
@@ -239,7 +240,6 @@ public class App {
     }
 
     public static void loadTransactions() {
-        transactions.clear();
         boolean isHeader = true;
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -271,7 +271,7 @@ public class App {
         }
     }
 
-    public static void runMonthToDate() {
+    public static void displayMonthToDate() {
         System.out.println("===== Month TO Date =====");
         LocalDate now = LocalDate.now();
 
@@ -281,7 +281,7 @@ public class App {
         pressEnterToContinue();
     }
 
-    public static void runPreviousMonth() {
+    public static void displayPreviousMonth() {
         System.out.println("===== Previous Month =====");
         LocalDate targetDate = LocalDate.now().minusMonths(1);
 
@@ -291,7 +291,7 @@ public class App {
         pressEnterToContinue();
     }
 
-    public static void runYearToDate() {
+    public static void displayYearToDate() {
         System.out.println("\n===== Year To Date =====");
         int currentYear = LocalDate.now().getYear();
 
@@ -301,7 +301,7 @@ public class App {
         pressEnterToContinue();
     }
 
-    public static void runPreviousYear() {
+    public static void displayPreviousYear() {
         System.out.println("\n===== Previous Year =====");
         int targetYear = LocalDate.now().getYear() - 1;
 
@@ -311,9 +311,9 @@ public class App {
         pressEnterToContinue();
     }
 
-    public static void runSearchByVendor() {
+    public static void displaySearchByVendor() {
         System.out.println("===== Search By Vendor =====");
-        String searchVendor = promptForString(inputScanner, "Enter vendor name" );
+        String searchVendor = promptForString(inputScanner, "Enter vendor name: " );
 
         ArrayList<Transaction> filtered = getTransactionsByVendor(searchVendor);
 
@@ -323,9 +323,9 @@ public class App {
 
     public static ArrayList<Transaction> getTransactionsByMonth(int year, int month) {
         ArrayList<Transaction> filtered = new ArrayList<>();
-        for (Transaction t : transactions) {
-            if (t.getDate().getYear() == year && t.getDate().getMonthValue() == month) {
-                filtered.add(t);
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getYear() == year && transaction.getDate().getMonthValue() == month) {
+                filtered.add(transaction);
             }
         }
         return filtered;
@@ -333,9 +333,9 @@ public class App {
 
     public static ArrayList<Transaction> getTransactionsByYear(int year) {
         ArrayList<Transaction> filtered = new ArrayList<>();
-        for (Transaction t : transactions) {
-            if (t.getDate().getYear() == year) {
-                filtered.add(t);
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getYear() == year) {
+                filtered.add(transaction);
             }
         }
         return filtered;
@@ -357,7 +357,7 @@ public class App {
         inputScanner.nextLine();
     }
 
-    public static void printTransactionTable(java.util.List<Transaction> transactionList) {
+    public static void printTransactionTable(List<Transaction> transactionList) {
         if (transactionList.isEmpty()) {
             System.out.println("No transactions found.");
             return;
