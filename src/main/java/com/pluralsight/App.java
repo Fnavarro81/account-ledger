@@ -8,8 +8,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class App {
-    private static Scanner inputScanner = new Scanner(System.in);
-    private static ArrayList<Transaction> transactions = new ArrayList<>();
+    private static final Scanner inputScanner = new Scanner(System.in);
+    private static final ArrayList<Transaction> transactions = new ArrayList<>();
 
     public static void main(String[] args) {
         loadTransactions();
@@ -314,9 +314,9 @@ public class App {
         System.out.println("===== Search By Vendor =====");
         String searchVendor = promptForString(inputScanner, "Enter vendor name" );
 
-        ArrayList<Transaction> filetered = getTransactionsByVendor(searchVendor);
+        ArrayList<Transaction> filtered = getTransactionsByVendor(searchVendor);
 
-        printTransactionTable(filetered);
+        printTransactionTable(filtered);
         pressEnterToContinue();
     }
 
