@@ -43,7 +43,7 @@ The Reports Screen displays six options for the user to interact with. The first
 ## Interesting code
 The most interesting piece of code I made was this one, due to how simple it looks despite the hours of code needed just to make it look simple
 
-    public static void runYearToDate() {
+    public static void displayYearToDate() {
     System.out.println("\n===== Year To Date =====");
     int currentYear = LocalDate.now().getYear();
 

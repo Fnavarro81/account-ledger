@@ -366,10 +366,12 @@ public class App {
         System.out.printf("%-12s | %-10s | %-25s | %-20s | %12s%n", "Date", "Time", "Description", "Vendor", "Amount");
         System.out.println("----------------------------------------------------------------------------------------");
 
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
         for (Transaction transaction : transactionList) {
             System.out.printf("%-12s | %-10s | %-25s | %-20s | $%11.2f%n",
                     transaction.getDate(),
-                    transaction.getTime(),
+                    transaction.getTime().format(timeFormatter),
                     transaction.getDescription(),
                     transaction.getVendor(),
                     transaction.getAmount());
